@@ -1,0 +1,229 @@
+/* ═══════════════════════════════════════════════════════════════
+   WAYBAR — ARABIC THEME
+   Gold & dark, ornamental, geometric borders
+   ═══════════════════════════════════════════════════════════════ */
+@import url("colors.css");
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans Arabic", "Font Awesome 6 Free", sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @fg;
+}
+
+/* ── Bar — deep obsidian with gold trim ── */
+window#waybar > box {
+  background: linear-gradient(
+    90deg,
+    alpha(@bg, 0.97),
+    alpha(@accent5, 0.25) 20%,
+    alpha(@accent2, 0.12) 50%,
+    alpha(@accent5, 0.25) 80%,
+    alpha(@bg, 0.97)
+  );
+  border-radius: 0px;
+  padding: 0 18px;
+  border-top: 1px solid alpha(@accent2, 0.6);
+  border-bottom: 2px solid alpha(@accent2, 0.7);
+  box-shadow:
+    0 0 0 1px alpha(@accent1, 0.08),
+    0 4px 24px alpha(@accent2, 0.18),
+    inset 0 1px 0 alpha(@accent3, 0.12);
+}
+
+/* ── Modules — ornamental pill with double border effect ── */
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#battery,
+#mpris {
+  padding: 2px 16px;
+  margin: 5px 4px;
+  font-size: 13px;
+  background: linear-gradient(
+    160deg,
+    alpha(@bg, 0.85),
+    alpha(@accent5, 0.2)
+  );
+  border-radius: 3px;
+  border: 1px solid alpha(@accent2, 0.35);
+  border-bottom: 2px solid alpha(@accent2, 0.55);
+  border-top: 1px solid alpha(@accent3, 0.2);
+  color: @fg;
+  text-shadow: 0 0 8px alpha(@accent2, 0.25);
+  transition: all 0.25s ease;
+  box-shadow:
+    inset 0 1px 0 alpha(@accent3, 0.08),
+    0 2px 8px alpha(@bg, 0.5);
+}
+
+/* Corner ornament effect using outline */
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#battery,
+#mpris {
+  outline: 1px solid alpha(@accent2, 0.08);
+  outline-offset: 2px;
+}
+
+#cpu:hover,
+#memory:hover,
+#network:hover,
+#pulseaudio:hover,
+#battery:hover,
+#mpris:hover {
+  color: @accent2;
+  background: linear-gradient(160deg, alpha(@accent1, 0.15), alpha(@accent2, 0.2));
+  border-color: alpha(@accent2, 0.7);
+  border-bottom-color: @accent2;
+  text-shadow: 0 0 12px alpha(@accent2, 0.6);
+  box-shadow:
+    0 0 12px alpha(@accent2, 0.2),
+    inset 0 1px 0 alpha(@accent3, 0.15);
+  outline-color: alpha(@accent2, 0.2);
+}
+
+/* ── Clock — the jewel of the bar ── */
+#custom-clock {
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 2px 24px;
+  margin: 4px 8px;
+  background: linear-gradient(
+    160deg,
+    alpha(@bg, 0.9),
+    alpha(@accent1, 0.2),
+    alpha(@accent2, 0.15)
+  );
+  border-radius: 3px;
+  border: 1px solid alpha(@accent2, 0.5);
+  border-bottom: 2px solid @accent2;
+  border-top: 1px solid alpha(@accent3, 0.3);
+  color: @accent2;
+  text-shadow:
+    0 0 8px alpha(@accent2, 0.5),
+    0 0 20px alpha(@accent2, 0.2);
+  transition: all 0.25s ease;
+  outline: 1px solid alpha(@accent2, 0.12);
+  outline-offset: 2px;
+  box-shadow:
+    0 0 16px alpha(@accent2, 0.12),
+    inset 0 1px 0 alpha(@accent3, 0.1);
+}
+
+#custom-clock:hover {
+  color: @accent3;
+  border-bottom-color: @accent3;
+  text-shadow:
+    0 0 12px alpha(@accent3, 0.7),
+    0 0 28px alpha(@accent3, 0.3);
+  outline-color: alpha(@accent3, 0.25);
+}
+
+/* ── Workspaces ── */
+#workspaces {
+  background: transparent;
+  padding: 0 6px;
+  margin: 5px 4px;
+  border: none;
+}
+
+#workspaces button {
+  font-size: 11px;
+  font-weight: bold;
+  color: alpha(@accent4, 0.45);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 2px;
+  padding: 0 6px;
+  margin: 0 2px;
+  min-width: 14px;
+  min-height: 8px;
+  transition-property: color, text-shadow, background-color, border-bottom-color;
+  transition-duration: 400ms;
+  transition-timing-function: ease-out;
+}
+
+#workspaces button:hover {
+  color: @accent3;
+  background-color: alpha(@accent2, 0.12);
+  border-bottom-color: alpha(@accent3, 0.5);
+  text-shadow: 0 0 8px alpha(@accent3, 0.5);
+}
+
+#workspaces button.active {
+  color: @accent2;
+  font-size: 13px;
+  background: linear-gradient(160deg, alpha(@accent1, 0.2), alpha(@accent2, 0.12));
+  border-bottom-color: @accent2;
+  text-shadow:
+    0 0 10px alpha(@accent2, 0.9),
+    0 0 22px alpha(@accent2, 0.4);
+  outline: 1px solid alpha(@accent2, 0.15);
+  outline-offset: 1px;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in;
+}
+
+/* ── Per-module accent colors ── */
+#cpu          { color: @accent3; border-bottom-color: alpha(@accent3, 0.4); }
+#cpu:hover    { color: @accent3; border-bottom-color: @accent3; text-shadow: 0 0 12px alpha(@accent3, 0.6); }
+
+#memory       { color: @accent6; border-bottom-color: alpha(@accent6, 0.4); }
+#memory:hover { color: @accent6; border-bottom-color: @accent6; text-shadow: 0 0 12px alpha(@accent6, 0.6); }
+
+#network       { color: @accent1; border-bottom-color: alpha(@accent1, 0.4); }
+#network:hover { color: @accent1; border-bottom-color: @accent1; text-shadow: 0 0 12px alpha(@accent1, 0.6); }
+
+#pulseaudio       { color: @accent4; border-bottom-color: alpha(@accent4, 0.4); }
+#pulseaudio:hover { color: @accent4; border-bottom-color: @accent4; text-shadow: 0 0 12px alpha(@accent4, 0.6); }
+
+#battery       { color: @accent2; border-bottom-color: alpha(@accent2, 0.4); }
+#battery:hover { color: @accent2; border-bottom-color: @accent2; text-shadow: 0 0 12px alpha(@accent2, 0.6); }
+
+#mpris         { color: @accent5; border-bottom-color: alpha(@accent5, 0.4); }
+#mpris:hover   { color: @accent5; border-bottom-color: @accent5; text-shadow: 0 0 12px alpha(@accent5, 0.6); }
+
+/* ── Battery states ── */
+#battery.warning  { color: @accent3; border-bottom-color: @accent3; }
+#battery.critical {
+  color: @accent1;
+  border-bottom-color: @accent1;
+  animation: pulse 1.2s ease-in-out infinite alternate;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: #50fa7b;
+  border-bottom-color: #50fa7b;
+  background: linear-gradient(160deg, alpha(#50fa7b, 0.2), alpha(#50fa7b, 0.08));
+  border-color: alpha(#50fa7b, 0.5);
+  animation: charge-glow 2s ease-in-out infinite alternate;
+}
+
+#pulseaudio.muted     { color: alpha(@fg, 0.2); border-bottom-color: transparent; text-shadow: none; }
+#network.disconnected { color: alpha(@fg, 0.2); border-bottom-color: transparent; text-shadow: none; }
+
+/* ── Animations ── */
+@keyframes pulse {
+  from { text-shadow: 0 0 4px alpha(@accent1, 0.3); }
+  to   { text-shadow: 0 0 16px alpha(@accent1, 0.8), 0 0 32px alpha(@accent1, 0.3); }
+}
+
+@keyframes charge-glow {
+  from { text-shadow: 0 0 6px alpha(#50fa7b, 0.4); box-shadow: 0 0 6px alpha(#50fa7b, 0.1); }
+  to   { text-shadow: 0 0 18px alpha(#50fa7b, 0.9), 0 0 36px alpha(#50fa7b, 0.4); box-shadow: 0 0 16px alpha(#50fa7b, 0.3); }
+}

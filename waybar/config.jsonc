@@ -1,0 +1,83 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 42,
+  "spacing": 0,
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
+  "modules-left": ["cpu", "memory", "hyprland/workspaces"],
+  "modules-center": ["custom/clock"],
+  "modules-right": ["mpris", "network", "pulseaudio", "battery"],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "◆",
+      "default": "·"
+    },
+    "persistent-workspaces": {
+      "*": 5
+    },
+    "on-click": "activate",
+    "all-outputs": true
+  },
+  "custom/clock": {
+    "exec": "~/.config/waybar/scripts/daynight-arabic.sh",
+    "on-click": "~/.config/waybar/scripts/daynight-arabic.sh alt",
+    "interval": 30,
+    "format": "{}",
+    "tooltip": false
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "  {usage}%",
+    "max-length": 12
+  },
+  "memory": {
+    "interval": 5,
+    "format": "  {percentage}%",
+    "max-length": 12
+  },
+  "network": {
+    "format-wifi": "  {signalStrength}%",
+    "format-ethernet": "  {ipaddr}",
+    "format-disconnected": "Disconnected",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+    "max-length": 20
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "  muted",
+    "format-icons": {
+      "default": ["", "", ""]
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip-format": "{desc} | {volume}%"
+  },
+  "battery": {
+    "interval": 30,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""]
+  },
+  "mpris": {
+    "on-click": "hyprctl dispatch togglespecialworkspace spotify",
+    "format": "{player_icon}  {title} — {artist}",
+    "format-paused": "{player_icon}  {status_icon} {title}",
+    "player-icons": {
+      "spotify": "",
+      "default": ""
+    },
+    "status-icons": {
+      "paused": ""
+    },
+    "max-length": 30,
+    "tooltip-format": "{player}: {title} — {artist}\n{album}"
+  }
+}

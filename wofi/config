@@ -1,0 +1,10 @@
+show=drun
+width=380
+height=440
+always_parsed=true
+allow_images=true
+image_size=32
+prompt=Search
+insensitive=true
+no_actions=true
+columns=1

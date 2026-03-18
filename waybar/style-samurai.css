@@ -1,0 +1,190 @@
+/* ═══════════════════════════════════════════════════════════════
+   WAYBAR — SAMURAI THEME
+   Ink & steel, sharp edges, blood-red accents on dark lacquer
+   ═══════════════════════════════════════════════════════════════ */
+@import url("colors.css");
+
+* {
+  font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK JP", "Font Awesome 6 Free", sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @fg;
+}
+
+/* ── Bar — flowing dark gradient, soft pill ── */
+window#waybar > box {
+  background: linear-gradient(
+    90deg,
+    alpha(@bg, 0.92),
+    alpha(@accent5, 0.4) 20%,
+    alpha(@accent2, 0.18) 50%,
+    alpha(@accent5, 0.4) 80%,
+    alpha(@bg, 0.92)
+  );
+  border-radius: 22px;
+  padding: 0 14px;
+  border-bottom: 2px solid alpha(@accent2, 0.45);
+  border-left: 1px solid alpha(@accent2, 0.12);
+  border-right: 1px solid alpha(@accent2, 0.12);
+  box-shadow:
+    0 2px 12px alpha(@accent2, 0.2),
+    inset 0 -1px 6px alpha(@accent2, 0.08);
+}
+
+/* ── Modules — brushed metal pills ── */
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#battery,
+#mpris {
+  padding: 2px 14px;
+  margin: 6px 3px;
+  font-size: 14px;
+  background: linear-gradient(135deg, alpha(@bg, 0.6), alpha(@accent5, 0.4));
+  border-radius: 12px;
+  border: 1px solid alpha(@accent5, 0.5);
+  border-bottom: 2px solid alpha(@accent5, 0.45);
+  color: @fg;
+  text-shadow: 0 0 5px alpha(@accent2, 0.2);
+  transition: all 0.3s ease;
+}
+
+#cpu:hover,
+#memory:hover,
+#network:hover,
+#pulseaudio:hover,
+#battery:hover,
+#mpris:hover {
+  color: @accent2;
+  background: linear-gradient(135deg, alpha(@accent2, 0.2), alpha(@accent5, 0.4));
+  border-color: alpha(@accent2, 0.55);
+  border-bottom-color: @accent2;
+  text-shadow: 0 0 10px alpha(@accent2, 0.5);
+  box-shadow: 0 0 8px alpha(@accent2, 0.15);
+}
+
+/* ── Clock ── */
+#custom-clock {
+  font-family: "Noto Sans CJK JP", "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  padding: 2px 20px;
+  margin: 4px 6px;
+  background: linear-gradient(135deg, alpha(@bg, 0.6), alpha(@accent5, 0.4));
+  border-radius: 12px;
+  border: 1px solid alpha(@accent5, 0.5);
+  border-bottom: 2px solid alpha(@accent5, 0.45);
+  color: @fg;
+  text-shadow: 0 0 5px alpha(@accent2, 0.2);
+  transition: all 0.3s ease;
+}
+
+#custom-clock:hover {
+  color: @accent5;
+  border-bottom-color: @accent5;
+  text-shadow: 0 0 10px alpha(@accent5, 0.5);
+}
+
+/* ── Workspaces ── */
+#workspaces {
+  background: transparent;
+  padding: 0 4px;
+  margin: 6px 3px;
+  border: none;
+}
+
+#workspaces button {
+  font-family: "Noto Sans CJK JP", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  color: alpha(@accent4, 0.55);
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 4px;
+  padding: 0 4px;
+  margin: 0 1px;
+  min-width: 12px;
+  min-height: 8px;
+  text-shadow: none;
+  transition-property: color, text-shadow, background-color, border-bottom-color;
+  transition-duration: 500ms;
+  transition-timing-function: ease-out;
+}
+
+#workspaces button:hover {
+  color: @accent4;
+  background-color: alpha(@accent5, 0.2);
+  text-shadow: 0 0 6px alpha(@accent4, 0.4);
+}
+
+#workspaces button.active {
+  color: @accent2;
+  font-size: 13px;
+  background-color: alpha(@accent2, 0.18);
+  border-bottom-color: @accent2;
+  text-shadow:
+    0 0 10px alpha(@accent2, 0.8),
+    0 0 20px alpha(@accent2, 0.35);
+  transition-duration: 150ms;
+  transition-timing-function: ease-in;
+}
+
+/* ── Per-module accents ── */
+#cpu          { color: @accent3; border-bottom-color: alpha(@accent3, 0.3); }
+#cpu:hover    { color: @accent3; border-bottom-color: @accent3; text-shadow: 0 0 10px alpha(@accent3, 0.5); }
+
+#memory       { color: @accent6; border-bottom-color: alpha(@accent6, 0.3); }
+#memory:hover { color: @accent6; border-bottom-color: @accent6; text-shadow: 0 0 10px alpha(@accent6, 0.5); }
+
+#network       { color: @accent1; border-bottom-color: alpha(@accent1, 0.3); }
+#network:hover { color: @accent1; border-bottom-color: @accent1; text-shadow: 0 0 10px alpha(@accent1, 0.5); }
+
+#pulseaudio       { color: @accent4; border-bottom-color: alpha(@accent4, 0.3); }
+#pulseaudio:hover { color: @accent4; border-bottom-color: @accent4; text-shadow: 0 0 10px alpha(@accent4, 0.5); }
+
+#battery       { color: @accent2; border-bottom-color: alpha(@accent2, 0.3); }
+#battery:hover { color: @accent2; border-bottom-color: @accent2; text-shadow: 0 0 10px alpha(@accent2, 0.5); }
+
+#mpris         { color: @accent5; border-bottom-color: alpha(@accent5, 0.3); }
+#mpris:hover   { color: @accent5; border-bottom-color: @accent5; text-shadow: 0 0 10px alpha(@accent5, 0.5); }
+
+/* ── Battery states ── */
+#battery.warning  { color: @accent3; border-bottom-color: @accent3; }
+#battery.critical {
+  color: @accent2;
+  border-bottom-color: @accent2;
+  animation: pulse 1.2s ease-in-out infinite alternate;
+}
+
+#battery.charging,
+#battery.plugged {
+  color: #50fa7b;
+  border-bottom-color: #50fa7b;
+  background: linear-gradient(135deg, alpha(#50fa7b, 0.25), alpha(#50fa7b, 0.12));
+  border-color: alpha(#50fa7b, 0.6);
+  animation: charge-glow 2s ease-in-out infinite alternate;
+}
+
+#pulseaudio.muted     { color: alpha(@fg, 0.25); border-bottom-color: transparent; text-shadow: none; }
+#network.disconnected { color: alpha(@fg, 0.25); border-bottom-color: transparent; text-shadow: none; }
+
+/* ── Animations ── */
+@keyframes pulse {
+  from { text-shadow: 0 0 4px alpha(@accent2, 0.3); }
+  to   { text-shadow: 0 0 14px alpha(@accent2, 0.7), 0 0 28px alpha(@accent2, 0.3); }
+}
+
+@keyframes charge-glow {
+  from { text-shadow: 0 0 6px alpha(#50fa7b, 0.4); box-shadow: 0 0 6px alpha(#50fa7b, 0.15); }
+  to   { text-shadow: 0 0 16px alpha(#50fa7b, 0.8), 0 0 30px alpha(#50fa7b, 0.4); box-shadow: 0 0 14px alpha(#50fa7b, 0.35); }
+}
