@@ -6,14 +6,16 @@
   "margin-top": 4,
   "margin-left": 8,
   "margin-right": 8,
+
   "modules-left": ["cpu", "memory", "hyprland/workspaces"],
   "modules-center": ["custom/clock"],
   "modules-right": ["mpris", "network", "pulseaudio", "battery"],
+
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "active": "◆",
-      "default": "·"
+      "active": "刃",
+      "default": "・"
     },
     "persistent-workspaces": {
       "*": 5
@@ -21,23 +23,27 @@
     "on-click": "activate",
     "all-outputs": true
   },
+
   "custom/clock": {
-    "exec": "~/.config/waybar/scripts/daynight-arabic.sh",
-    "on-click": "~/.config/waybar/scripts/daynight-arabic.sh alt",
+    "exec": "~/.config/waybar/scripts/daynight.sh",
+    "on-click": "~/.config/waybar/scripts/daynight.sh alt",
     "interval": 30,
     "format": "{}",
     "tooltip": false
   },
+
   "cpu": {
     "interval": 5,
     "format": "  {usage}%",
     "max-length": 12
   },
+
   "memory": {
     "interval": 5,
     "format": "  {percentage}%",
     "max-length": 12
   },
+
   "network": {
     "format-wifi": "  {signalStrength}%",
     "format-ethernet": "  {ipaddr}",
@@ -46,6 +52,7 @@
     "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
     "max-length": 20
   },
+
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": "  muted",
@@ -55,6 +62,7 @@
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
     "tooltip-format": "{desc} | {volume}%"
   },
+
   "battery": {
     "interval": 30,
     "states": {
