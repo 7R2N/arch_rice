@@ -1,0 +1,4 @@
+# local state / backups / tooling, not part of the rice
+.claude/
+kitty/kitty.conf.bak
+hypr/.current-theme

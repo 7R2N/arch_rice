@@ -28,7 +28,7 @@ window#waybar > box {
     alpha(@accent5, 0.4) 80%,
     alpha(@bg, 0.92)
   );
-  border-radius: 22px;
+  border-radius: 6px;
   padding: 0 14px;
   border-bottom: 2px solid alpha(@accent2, 0.45);
   border-left: 1px solid alpha(@accent2, 0.12);
@@ -42,14 +42,14 @@ window#waybar > box {
 #cpu,
 #memory,
 #network,
-#pulseaudio,
+#custom-volume,
 #battery,
 #mpris {
   padding: 2px 14px;
   margin: 6px 3px;
   font-size: 14px;
   background: linear-gradient(135deg, alpha(@bg, 0.6), alpha(@accent5, 0.4));
-  border-radius: 12px;
+  border-radius: 4px;
   border: 1px solid alpha(@accent5, 0.5);
   border-bottom: 2px solid alpha(@accent5, 0.45);
   color: @fg;
@@ -60,7 +60,7 @@ window#waybar > box {
 #cpu:hover,
 #memory:hover,
 #network:hover,
-#pulseaudio:hover,
+#custom-volume:hover,
 #battery:hover,
 #mpris:hover {
   color: @accent2;
@@ -80,7 +80,7 @@ window#waybar > box {
   padding: 2px 20px;
   margin: 4px 6px;
   background: linear-gradient(135deg, alpha(@bg, 0.6), alpha(@accent5, 0.4));
-  border-radius: 12px;
+  border-radius: 4px;
   border: 1px solid alpha(@accent5, 0.5);
   border-bottom: 2px solid alpha(@accent5, 0.45);
   color: @fg;
@@ -110,7 +110,7 @@ window#waybar > box {
   background-color: transparent;
   border: none;
   border-bottom: 2px solid transparent;
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 0 4px;
   margin: 0 1px;
   min-width: 12px;
@@ -149,8 +149,8 @@ window#waybar > box {
 #network       { color: @accent1; border-bottom-color: alpha(@accent1, 0.3); }
 #network:hover { color: @accent1; border-bottom-color: @accent1; text-shadow: 0 0 10px alpha(@accent1, 0.5); }
 
-#pulseaudio       { color: @accent4; border-bottom-color: alpha(@accent4, 0.3); }
-#pulseaudio:hover { color: @accent4; border-bottom-color: @accent4; text-shadow: 0 0 10px alpha(@accent4, 0.5); }
+#custom-volume       { color: @accent4; border-bottom-color: alpha(@accent4, 0.3); }
+#custom-volume:hover { color: @accent4; border-bottom-color: @accent4; text-shadow: 0 0 10px alpha(@accent4, 0.5); }
 
 #battery       { color: @accent2; border-bottom-color: alpha(@accent2, 0.3); }
 #battery:hover { color: @accent2; border-bottom-color: @accent2; text-shadow: 0 0 10px alpha(@accent2, 0.5); }
@@ -161,9 +161,11 @@ window#waybar > box {
 /* ── Battery states ── */
 #battery.warning  { color: @accent3; border-bottom-color: @accent3; }
 #battery.critical {
-  color: @accent2;
-  border-bottom-color: @accent2;
-  animation: pulse 1.2s ease-in-out infinite alternate;
+  color: #ff5555;
+  border-bottom-color: #ff5555;
+  background: linear-gradient(135deg, alpha(#ff5555, 0.25), alpha(#ff5555, 0.12));
+  border-color: alpha(#ff5555, 0.6);
+  animation: critical-glow 1.2s ease-in-out infinite alternate;
 }
 
 #battery.charging,
@@ -175,13 +177,13 @@ window#waybar > box {
   animation: charge-glow 2s ease-in-out infinite alternate;
 }
 
-#pulseaudio.muted     { color: alpha(@fg, 0.25); border-bottom-color: transparent; text-shadow: none; }
+#custom-volume.muted     { color: alpha(@fg, 0.25); border-bottom-color: transparent; text-shadow: none; }
 #network.disconnected { color: alpha(@fg, 0.25); border-bottom-color: transparent; text-shadow: none; }
 
 /* ── Animations ── */
-@keyframes pulse {
-  from { text-shadow: 0 0 4px alpha(@accent2, 0.3); }
-  to   { text-shadow: 0 0 14px alpha(@accent2, 0.7), 0 0 28px alpha(@accent2, 0.3); }
+@keyframes critical-glow {
+  from { text-shadow: 0 0 6px alpha(#ff5555, 0.4); box-shadow: 0 0 6px alpha(#ff5555, 0.15); }
+  to   { text-shadow: 0 0 16px alpha(#ff5555, 0.8), 0 0 30px alpha(#ff5555, 0.4); box-shadow: 0 0 14px alpha(#ff5555, 0.35); }
 }
 
 @keyframes charge-glow {

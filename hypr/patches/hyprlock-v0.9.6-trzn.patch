@@ -1,0 +1,85 @@
+diff --git a/src/core/Seat.cpp b/src/core/Seat.cpp
+index e03bb3e..c6337f1 100644
+--- a/src/core/Seat.cpp
++++ b/src/core/Seat.cpp
+@@ -83,6 +83,14 @@ void CSeatManager::registerSeat(SP<CCWlSeat> seat) {
+         if (caps & WL_SEAT_CAPABILITY_TOUCH) {
+             m_pTouch = makeShared<CCWlTouch>(r->sendGetTouch());
+             m_pTouch->setDown([](CCWlTouch* r, uint32_t serial, uint32_t time, wl_proxy* surface, int32_t id, wl_fixed_t x, wl_fixed_t y) {
++                // PATCH(trzn): focus the touched output. Upstream only sets m_focusedOutput on pointer enter (and not at all
++                // with hide_cursor = true), so onClick() dropped every touch on a touch-only (tablet) session.
++                for (const auto& POUTPUT : g_pHyprlock->m_vOutputs) {
++                    if (!POUTPUT->m_sessionLockSurface)
++                        continue;
++                    if (POUTPUT->m_sessionLockSurface->getWlSurface()->resource() == surface)
++                        g_pHyprlock->m_focusedOutput = POUTPUT;
++                }
+                 g_pHyprlock->onClick(BTN_LEFT, true, {wl_fixed_to_double(x), wl_fixed_to_double(y)});
+             });
+             m_pTouch->setUp([](CCWlTouch* r, uint32_t serial, uint32_t time, int32_t id) { g_pHyprlock->onClick(BTN_LEFT, false, {0, 0}); });
+diff --git a/src/core/hyprlock.cpp b/src/core/hyprlock.cpp
+index 9a66eea..54b3ba0 100644
+--- a/src/core/hyprlock.cpp
++++ b/src/core/hyprlock.cpp
+@@ -20,6 +20,8 @@
+ #include <cstring>
+ #include <xf86drm.h>
+ #include <algorithm>
++#include <fstream>
++#include <cctype>
+ #include <sdbus-c++/sdbus-c++.h>
+ #include <hyprutils/os/Process.hpp>
+ #include <malloc.h>
+@@ -696,6 +698,27 @@ void CHyprlock::handleKeySym(xkb_keysym_t sym, bool composed) {
+ 
+         if (len > 1)
+             m_sPasswordState.passBuffer += std::string{buf, len - 1};
++
++        // PATCH(trzn): PIN auto-submit. When the buffer is all digits and reaches the length stored in
++        // /etc/hyprlock-pin.len (written by hyprlock-set-pin), submit without Enter. Max 3 auto-tries per
++        // lock, and never resubmit the same input twice (a typo'd PIN can still be sent manually with Enter).
++        static const size_t PINLEN = []() -> size_t {
++            std::ifstream f("/etc/hyprlock-pin.len");
++            size_t        n = 0;
++            if (f)
++                f >> n;
++            return n;
++        }();
++        static int         autoTries = 0;
++        static std::string lastAutoSubmitted;
++        const auto&        BUF = m_sPasswordState.passBuffer;
++        if (PINLEN > 0 && BUF.length() == PINLEN && autoTries < 3 && BUF != lastAutoSubmitted &&
++            std::all_of(BUF.begin(), BUF.end(), [](unsigned char c) { return std::isdigit(c); })) {
++            Log::logger->log(Log::INFO, "Auto-submitting PIN input (length {})", PINLEN);
++            lastAutoSubmitted = BUF;
++            autoTries++;
++            g_pAuth->submitInput(BUF);
++        }
+     }
+ }
+ 
+diff --git a/src/main.cpp b/src/main.cpp
+index 0c84038..0205280 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -1,6 +1,8 @@
+ 
+ #include "config/ConfigManager.hpp"
+ #include "core/hyprlock.hpp"
++#include "core/Dbus.hpp"
++#include "auth/Auth.hpp"
+ #include "helpers/Log.hpp"
+ #include "core/AnimationManager.hpp"
+ 
+@@ -95,5 +97,11 @@ int main(int argc, char** argv, char** envp) {
+         return 1;
+     }
+ 
++    // PATCH(trzn): tear down in a defined order. g_pAuth (CFingerprint holds sdbus proxies) and g_dbus (the
++    // connection) are inline globals in different TUs; letting static destruction order them crashed inside
++    // libsdbus-c++ on every exit after unlock (proxies outliving their connection).
++    g_pAuth.reset();
++    g_dbus.reset();
++
+     return 0;
+ }

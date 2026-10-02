@@ -2,20 +2,19 @@
   "layer": "top",
   "position": "top",
   "height": 42,
+  "width": 1160,
   "spacing": 0,
   "margin-top": 4,
   "margin-left": 8,
   "margin-right": 8,
-
   "modules-left": ["cpu", "memory", "hyprland/workspaces"],
   "modules-center": ["custom/clock"],
-  "modules-right": ["mpris", "network", "pulseaudio", "battery"],
-
+  "modules-right": ["mpris", "network", "custom/volume", "battery"],
   "hyprland/workspaces": {
     "format": "{icon}",
     "format-icons": {
-      "active": "刃",
-      "default": "・"
+      "active": "◆",
+      "default": "·"
     },
     "persistent-workspaces": {
       "*": 5
@@ -23,46 +22,37 @@
     "on-click": "activate",
     "all-outputs": true
   },
-
   "custom/clock": {
-    "exec": "~/.config/waybar/scripts/daynight.sh",
-    "on-click": "~/.config/waybar/scripts/daynight.sh alt",
+    "exec": "~/.config/waybar/scripts/daynight-arabic.sh",
+    "on-click": "~/.config/waybar/scripts/daynight-arabic.sh alt",
     "interval": 30,
     "format": "{}",
     "tooltip": false
   },
-
   "cpu": {
     "interval": 5,
-    "format": "  {usage}%",
-    "max-length": 12
+    "format": "{usage}%"
   },
-
   "memory": {
     "interval": 5,
-    "format": "  {percentage}%",
-    "max-length": 12
+    "format": "{percentage}%"
   },
-
   "network": {
-    "format-wifi": "  {signalStrength}%",
-    "format-ethernet": "  {ipaddr}",
-    "format-disconnected": "Disconnected",
+    "format-wifi": " {signalStrength}%",
+    "format-ethernet": "󰈀 {ipaddr}",
+    "format-disconnected": "󰖪 off",
     "tooltip-format-wifi": "{essid} ({signalStrength}%)",
     "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
-    "max-length": 20
+    "max-length": 20,
+    "align": 0.5
   },
-
-  "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "  muted",
-    "format-icons": {
-      "default": ["", "", ""]
-    },
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-    "tooltip-format": "{desc} | {volume}%"
+  "custom/volume": {
+    "exec": "/home/trzn/.config/hypr/scripts/volume-status.sh",
+    "return-type": "json",
+    "on-click": "/home/trzn/.config/hypr/scripts/volume.sh mute",
+    "on-scroll-up": "/home/trzn/.config/hypr/scripts/volume.sh up",
+    "on-scroll-down": "/home/trzn/.config/hypr/scripts/volume.sh down"
   },
-
   "battery": {
     "interval": 30,
     "states": {
@@ -70,22 +60,23 @@
       "critical": 15
     },
     "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-icons": ["", "", "", "", ""]
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""]
   },
   "mpris": {
-    "on-click": "hyprctl dispatch togglespecialworkspace spotify",
+    "on-click": "hyprctl dispatch 'hl.dsp.workspace.toggle_special(\"spotify\")'",
     "format": "{player_icon}  {title} — {artist}",
     "format-paused": "{player_icon}  {status_icon} {title}",
     "player-icons": {
-      "spotify": "",
-      "default": ""
+      "spotify": "",
+      "default": ""
     },
     "status-icons": {
-      "paused": ""
+      "paused": ""
     },
-    "max-length": 30,
+    "max-length": 22,
+    "align": 0.5,
     "tooltip-format": "{player}: {title} — {artist}\n{album}"
   }
 }
